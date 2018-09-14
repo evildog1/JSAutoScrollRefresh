@@ -1,0 +1,29 @@
+// ==UserScript==
+// @name     JSAutoScrollRefresh
+// @version  1
+// @grant    none
+// ==/UserScript==
+var lastScrollHeight = 0;
+
+function pageScroll() {
+    var sh = document.documentElement.scrollHeight;
+    if (sh != lastScrollHeight) {
+        lastScrollHeight = sh;
+        document.documentElement.scrollTop = 0;
+    }
+    document.documentElement.scrollHeight = 0;
+    window.scrollBy(0, 1);
+    scrolldelay = setTimeout(pageScroll, 50);
+}
+
+pageScroll();
+
+window.onscroll = function(ev) {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+        setTimeout(refresh, 5000)
+    }
+};
+
+function refresh() {
+    window.location.reload(true);
+}
